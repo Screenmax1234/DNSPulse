@@ -1,0 +1,81 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "dns-speedchecker"
+version = "1.0.0"
+description = "A comprehensive DNS resolver benchmarking tool measuring real-world performance"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+authors = [
+    { name = "DNS Speed Checker Team" }
+]
+keywords = ["dns", "benchmark", "resolver", "performance", "networking"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: System Administrators",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Internet :: Name Service (DNS)",
+    "Topic :: System :: Networking",
+]
+
+dependencies = [
+    "dnspython>=2.4.0",
+    "httpx[http2]>=0.25.0",
+    "rich>=13.0.0",
+    "click>=8.1.0",
+    "numpy>=1.24.0",
+]
+
+[project.optional-dependencies]
+graphs = [
+    "matplotlib>=3.7.0",
+]
+gui = [
+    "fastapi>=0.104.0",
+    "uvicorn[standard]>=0.24.0",
+    "websockets>=12.0",
+]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+    "pytest-cov>=4.0.0",
+]
+all = [
+    "dns-speedchecker[graphs,gui,dev]",
+]
+
+[project.scripts]
+dns-speedchecker = "dns_speedchecker.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/YOUR_USERNAME/dns-speedchecker"
+Documentation = "https://github.com/YOUR_USERNAME/dns-speedchecker#readme"
+Issues = "https://github.com/YOUR_USERNAME/dns-speedchecker/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/dns_speedchecker"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[tool.coverage.run]
+source = ["src/dns_speedchecker"]
+branch = true
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "if TYPE_CHECKING:",
+    "raise NotImplementedError",
+]
